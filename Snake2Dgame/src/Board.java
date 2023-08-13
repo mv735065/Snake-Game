@@ -7,22 +7,22 @@ import java.awt.event.KeyEvent;
 
 public class Board extends JPanel  implements ActionListener {
 
-    int B_height=400;
-    int B_width=400;
+    int B_height=400;  // height of board
+    int B_width=400;   //width of board
 
   int Max_dots=1600;
-  int Dot_Size=10;
-  int Dots=3;
+  int Dot_Size=10;  // size of dot
+  int Dots=3;         // snake starts with 3 dots 
 
   int x[]=new int[1600],y[]=new int[1600];
 
-int apple_x,apple_y;
+int apple_x,apple_y;  // position of apple
 
 Image body,apple,head;
 Timer timer;
-int Delay=100;
+int Delay=100;    // delay of every move
 
-boolean leftDir=true;
+boolean leftDir=true;        // directions of snake moving
     boolean rightDir=false;
     boolean upDir=false;
     boolean downDir=false;
@@ -38,17 +38,17 @@ boolean leftDir=true;
         imageloader();
     }
 
-    public void intiatGame(){
-        Dots=3;
+    public void intiatGame(){   // at the start of game 
+        Dots=3;       
         x[0]=150;
         y[0]=150;
         for(int i=1;i<Dots;i++){
             x[i]=x[i-1]+Dot_Size;
             y[i]=y[i-1];
         }
-        apple_x=150;
+        apple_x=150;               
         apple_y=150;
-        locateApple();
+        locateApple();           // to lace the apple
         timer=new Timer(Delay,this);
         timer.start();
 
@@ -56,6 +56,8 @@ boolean leftDir=true;
     }
 
     public void imageloader(){
+        // every time loading the image of apple & snake
+        
         ImageIcon bodyicon=new ImageIcon("src/resources/dot.png");
         body=bodyicon.getImage();
         ImageIcon headicon=new ImageIcon("src/resources/head.png");
@@ -69,13 +71,13 @@ boolean leftDir=true;
         super.paintComponent(g);
         doDrawing(g);
     }
-    public void   locateApple(){
+    public void   locateApple(){  // every time apple change the location
         apple_x=((int)(Math.random()*39))*Dot_Size;
         apple_y=((int)(Math.random()*39))*Dot_Size;
 
     }
     public void checkgame(){
-
+// checking the game .=, where the sanke is colliodng or not
         for(int i=1;i<Dots;i++){
             if(i>4 && x[i]==x[0] && y[i]==y[0]){
                 ingame=false;
@@ -122,6 +124,7 @@ boolean leftDir=true;
     }
     @Override
     public void actionPerformed(ActionEvent actionEvent){
+        // performing the action every time snake moves 
         if(ingame) {
             check();
             checkgame();
@@ -130,6 +133,7 @@ boolean leftDir=true;
         repaint();
     }
     public void move(){
+        // changing the directin 
         for(int i=Dots;i>0;i--){
             x[i]=x[i-1];
             y[i]=y[i-1];
@@ -176,6 +180,8 @@ boolean leftDir=true;
 
         @Override
         public void keyPressed(KeyEvent keyEvent){
+
+            // every time key pressed ,sanke changes direction
             int key=keyEvent.getKeyCode();
             if(key==KeyEvent.VK_LEFT && !rightDir){
                 leftDir=true;
